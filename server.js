@@ -29,6 +29,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Route to Teacher Portal
+app.get('/teacher', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'teacher.html'));
+});
+
 // Helper: Get local LAN IPv4 address
 function getLocalIpAddresses() {
   const interfaces = os.networkInterfaces();
