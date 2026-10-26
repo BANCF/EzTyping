@@ -100,17 +100,9 @@ app.get('/api/export-excel', (req, res) => {
     const raw = fs.readFileSync(RESULTS_FILE, 'utf8');
     const results = JSON.parse(raw || '[]');
 
-    const classNameFilter = req.query.className;
-    let filtered = results;
-    if (classNameFilter && classNameFilter !== 'ALL') {
-      filtered = results.filter(r => r.className === classNameFilter);
-    }
-
-    const excelData = filtered.map((r, index) => ({
+    const excelData = results.map((r, index) => ({
       'STT': index + 1,
-      'Số máy': r.machineNumber || 'N/A',
-      'Họ và tên học sinh': r.studentName,
-      'Lớp': r.className,
+      'Họ và tên học sinh': r.studentName || 'Học sinh',
       'Bài luyện / Bài thi': r.lessonTitle || 'Bài kiểm tra',
       'Chế độ': r.mode === 'test' ? 'Kiểm tra' : 'Luyện tập',
       'Tốc độ (WPM)': r.wpm || 0,
@@ -126,10 +118,8 @@ app.get('/api/export-excel', (req, res) => {
     const worksheet = xlsx.utils.json_to_sheet(excelData);
     worksheet['!cols'] = [
       { wch: 6 },
-      { wch: 10 },
       { wch: 25 },
-      { wch: 10 },
-      { wch: 25 },
+      { wch: 28 },
       { wch: 14 },
       { wch: 14 },
       { wch: 18 },
@@ -145,7 +135,7 @@ app.get('/api/export-excel', (req, res) => {
     xlsx.utils.book_append_sheet(workbook, worksheet, 'KetQuaGoBanPhim');
 
     const buffer = xlsx.write(workbook, { type: 'buffer', bookType: 'xlsx' });
-    const filename = `KetQua_GoBanPhim_${classNameFilter || 'TatCa'}_${new Date().toISOString().slice(0, 10)}.xlsx`;
+    const filename = `KetQua_GoBanPhim_${new Date().toISOString().slice(0, 10)}.xlsx`;
 
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

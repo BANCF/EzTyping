@@ -152,19 +152,13 @@ class TeacherDashboard {
       }
     });
 
-    this.filterClassSelect?.addEventListener('change', (e) => {
-      this.currentFilterClass = e.target.value;
-      this.renderResultsTable();
-    });
-
     this.searchStudentInput?.addEventListener('input', (e) => {
       this.searchQuery = e.target.value.toLowerCase().trim();
       this.renderResultsTable();
     });
 
     this.exportExcelBtn?.addEventListener('click', () => {
-      const classQuery = this.currentFilterClass || 'ALL';
-      window.location.href = `/api/export-excel?className=${encodeURIComponent(classQuery)}`;
+      window.location.href = '/api/export-excel';
     });
 
     this.clearResultsBtn?.addEventListener('click', async () => {
@@ -225,13 +219,12 @@ class TeacherDashboard {
 
       card.innerHTML = `
         <div class="student-card-header">
-          <span class="card-machine-num">${s.machineNumber || 'Máy con'}</span>
+          <span class="card-student-name" style="font-size: 1.15rem; font-weight: 800; color: #2d3748;">👤 ${s.name || 'Học sinh'}</span>
           ${statusBadge}
         </div>
-        <div class="card-student-name">${s.name || 'Học sinh'}</div>
-        <div class="card-student-class">Lớp: ${s.className || 'Tự do'} • ${s.lessonTitle || 'Tự do'}</div>
+        <div class="card-student-class" style="color: #718096; font-size: 0.9rem; margin-top: 4px;">📖 ${s.lessonTitle || 'Luyện gõ tự do'}</div>
 
-        <div class="card-progress-bar-wrap">
+        <div class="card-progress-bar-wrap" style="margin-top: 10px;">
           <div class="card-progress-bar-fill" style="width: ${s.progress || 0}%"></div>
         </div>
 
@@ -278,26 +271,10 @@ class TeacherDashboard {
       const res = await fetch('/api/results');
       const data = await res.json();
       this.results = data;
-      this.updateClassFilterDropdown();
       this.renderResultsTable();
     } catch (e) {
       if (!isBackground) console.error('Lỗi tải kết quả:', e);
     }
-  }
-
-  updateClassFilterDropdown() {
-    if (!this.filterClassSelect) return;
-    const currentVal = this.filterClassSelect.value;
-    const classes = [...new Set(this.results.map(r => r.className).filter(Boolean))].sort();
-
-    this.filterClassSelect.innerHTML = '<option value="ALL">Tất cả các lớp</option>';
-    classes.forEach(c => {
-      const opt = document.createElement('option');
-      opt.value = c;
-      opt.textContent = `Lớp ${c}`;
-      if (c === currentVal) opt.selected = true;
-      this.filterClassSelect.appendChild(opt);
-    });
   }
 
   renderResultsTable() {
@@ -305,9 +282,6 @@ class TeacherDashboard {
     this.resultsTableBody.innerHTML = '';
 
     let filtered = this.results;
-    if (this.currentFilterClass !== 'ALL') {
-      filtered = filtered.filter(r => r.className === this.currentFilterClass);
-    }
     if (this.searchQuery) {
       filtered = filtered.filter(r => (r.studentName || '').toLowerCase().includes(this.searchQuery));
     }
@@ -315,7 +289,7 @@ class TeacherDashboard {
     if (filtered.length === 0) {
       this.resultsTableBody.innerHTML = `
         <tr>
-          <td colspan="11" style="text-align: center; color: #a0aec0; padding: 30px;">
+          <td colspan="9" style="text-align: center; color: #a0aec0; padding: 30px;">
             Chưa có bài thi nào nộp trong ca này.
           </td>
         </tr>
@@ -333,11 +307,9 @@ class TeacherDashboard {
 
       tr.innerHTML = `
         <td><b>${idx + 1}</b></td>
-        <td><span class="card-machine-num">${r.machineNumber || 'N/A'}</span></td>
-        <td><b>${r.studentName}</b></td>
-        <td><span class="badge-tag">${r.className}</span></td>
+        <td><b style="font-size: 1rem; color: #2b6cb0;">${r.studentName || 'Học sinh'}</b></td>
         <td>${r.lessonTitle || 'Bài kiểm tra'}</td>
-        <td><b style="color: #2b8a3e">${r.wpm || 0}</b></td>
+        <td><b style="color: #2b8a3e; font-size: 1.05rem;">${r.wpm || 0}</b></td>
         <td><b>${r.accuracy || 0}%</b></td>
         <td style="color: #e53e3e">${r.mistakesCount || 0}</td>
         <td>${durationStr}</td>

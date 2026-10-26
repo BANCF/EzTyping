@@ -115,17 +115,9 @@ app.post('/api/submit', (req, res) => {
 app.get('/api/export-excel', (req, res) => {
   try {
     const list = readResults();
-    const classNameFilter = req.query.className;
-    let filtered = list;
-    if (classNameFilter && classNameFilter !== 'ALL') {
-      filtered = list.filter(r => r.className === classNameFilter);
-    }
-
-    const excelData = filtered.map((r, index) => ({
+    const excelData = list.map((r, index) => ({
       'STT': index + 1,
-      'Số máy': r.machineNumber || 'N/A',
-      'Họ và tên học sinh': r.studentName,
-      'Lớp': r.className,
+      'Họ và tên học sinh': r.studentName || 'Học sinh',
       'Bài thi / Bài luyện': r.lessonTitle || 'Bài kiểm tra',
       'Chế độ': r.mode === 'test' ? 'Kiểm tra' : 'Luyện tập',
       'Tốc độ (WPM)': r.wpm || 0,
@@ -140,17 +132,25 @@ app.get('/api/export-excel', (req, res) => {
 
     const worksheet = xlsx.utils.json_to_sheet(excelData);
     worksheet['!cols'] = [
-      { wch: 6 }, { wch: 10 }, { wch: 25 }, { wch: 10 },
-      { wch: 28 }, { wch: 14 }, { wch: 14 }, { wch: 18 },
-      { wch: 16 }, { wch: 10 }, { wch: 16 }, { wch: 14 },
-      { wch: 25 }, { wch: 22 }
+      { wch: 6 },
+      { wch: 25 },
+      { wch: 28 },
+      { wch: 14 },
+      { wch: 14 },
+      { wch: 18 },
+      { wch: 16 },
+      { wch: 10 },
+      { wch: 16 },
+      { wch: 14 },
+      { wch: 22 },
+      { wch: 22 }
     ];
 
     const workbook = xlsx.utils.book_new();
     xlsx.utils.book_append_sheet(workbook, worksheet, 'KetQuaGoBanPhim');
 
     const buffer = xlsx.write(workbook, { type: 'buffer', bookType: 'xlsx' });
-    const filename = `KetQua_GoBanPhim_${encodeURIComponent(classNameFilter || 'TatCa')}_${new Date().toISOString().slice(0, 10)}.xlsx`;
+    const filename = `KetQua_GoBanPhim_${new Date().toISOString().slice(0, 10)}.xlsx`;
 
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

@@ -4,9 +4,7 @@ class TypingApp {
   constructor() {
     this.socket = null;
     this.student = {
-      name: localStorage.getItem('student_name') || '',
-      className: localStorage.getItem('student_class') || 'Lớp 3A',
-      machineNumber: localStorage.getItem('student_machine') || 'Máy ' + Math.floor(Math.random() * 30 + 1)
+      name: localStorage.getItem('student_name') || ''
     };
 
     this.currentMode = 'typing'; // 'typing' | 'balloon' | 'racer' | 'meteor' | 'apple' | 'exam10m'
@@ -211,18 +209,12 @@ class TypingApp {
     // Login Form Submit
     document.getElementById('loginForm')?.addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = document.getElementById('inputStudentName').value.trim();
-      const cls = document.getElementById('inputStudentClass').value.trim();
-      const mach = document.getElementById('inputMachineNumber').value.trim();
+      const nameInput = document.getElementById('inputStudentName');
+      const name = nameInput ? nameInput.value.trim() : '';
 
       if (!name) return;
       this.student.name = name;
-      this.student.className = cls || 'Lớp 3A';
-      this.student.machineNumber = mach || 'Máy ' + Math.floor(Math.random() * 30 + 1);
-
       localStorage.setItem('student_name', this.student.name);
-      localStorage.setItem('student_class', this.student.className);
-      localStorage.setItem('student_machine', this.student.machineNumber);
 
       this.updateStudentBadge();
       this.closeLoginModal();
@@ -297,16 +289,14 @@ class TypingApp {
 
   updateStudentBadge() {
     const nameEl = document.getElementById('displayStudentName');
-    const classEl = document.getElementById('displayStudentClass');
-    if (nameEl) nameEl.textContent = this.student.name;
-    if (classEl) classEl.textContent = `${this.student.className} • ${this.student.machineNumber}`;
+    if (nameEl) nameEl.textContent = this.student.name || 'Học sinh';
   }
 
   openLoginModal() {
-    document.getElementById('inputStudentName').value = this.student.name;
-    document.getElementById('inputStudentClass').value = this.student.className;
-    document.getElementById('inputMachineNumber').value = this.student.machineNumber;
+    const inputName = document.getElementById('inputStudentName');
+    if (inputName) inputName.value = this.student.name || '';
     this.loginModal.classList.add('is-open');
+    setTimeout(() => inputName?.focus(), 100);
   }
 
   closeLoginModal() {
@@ -548,9 +538,7 @@ class TypingApp {
     else if (accuracy >= 90) badge = 'Bàn Tay Vàng 🌟';
 
     const result = {
-      studentName: this.student.name,
-      className: this.student.className,
-      machineNumber: this.student.machineNumber,
+      studentName: this.student.name || 'Học sinh',
       lessonId: this.currentLesson.id,
       lessonTitle: this.currentLesson.title,
       mode: this.isExamMode ? 'test' : 'practice',

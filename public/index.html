@@ -46,12 +46,9 @@
 
     <div style="display: flex; align-items: center; gap: 10px;">
       <!-- Thẻ Học Sinh -->
-      <div class="student-badge-card" id="changeStudentBtn" title="Bấm để đổi tên học sinh hoặc lớp">
+      <div class="student-badge-card" id="changeStudentBtn" title="Bấm để đổi tên học sinh">
         <div style="font-size: 1.2rem;">🎒</div>
-        <div>
-          <div class="student-name-display" id="displayStudentName">Học sinh</div>
-          <div class="student-class-display" id="displayStudentClass">Lớp 3A • Máy 01</div>
-        </div>
+        <div class="student-name-display" id="displayStudentName">Học sinh</div>
       </div>
 
       <!-- Nút vào trang Giáo Viên -->
@@ -189,22 +186,12 @@
     <div class="modal-card">
       <div class="modal-icon">👦👧</div>
       <h2 class="modal-title">Chào Mừng Học Sinh!</h2>
-      <p class="modal-desc">Vui lòng nhập tên và lớp để bắt đầu luyện gõ và nộp điểm</p>
+      <p class="modal-desc">Nhập họ và tên của bạn để bắt đầu luyện gõ</p>
 
       <form id="loginForm">
         <div class="form-group">
           <label class="form-label" for="inputStudentName">Họ và tên của bạn:</label>
           <input type="text" id="inputStudentName" class="form-input" placeholder="Ví dụ: Nguyễn Minh An" required autofocus>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="inputStudentClass">Lớp học:</label>
-          <input type="text" id="inputStudentClass" class="form-input" placeholder="Ví dụ: 3A, 4B, 5C..." required value="Lớp 3A">
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="inputMachineNumber">Số máy bàn (nếu có):</label>
-          <input type="text" id="inputMachineNumber" class="form-input" placeholder="Ví dụ: Máy 05">
         </div>
 
         <button type="submit" class="btn-primary">BẮT ĐẦU LUYỆN GÕ 🚀</button>
