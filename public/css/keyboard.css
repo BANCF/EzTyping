@@ -1,0 +1,258 @@
+/* ==========================================================
+   KEYBOARD & HANDS EXPANDED STYLESHEET
+   Mở rộng kích thước bàn phím to rõ, lấp đầy màn hình, không bị thừa khoảng trắng
+   ========================================================== */
+
+:root {
+  --c-l-pinky: #FF4757;
+  --c-l-ring: #FFA502;
+  --c-l-middle: #F1C40F;
+  --c-l-index: #2ED573;
+  --c-thumbs: #1E90FF;
+  --c-r-index: #70A1FF;
+  --c-r-middle: #9C88FF;
+  --c-r-ring: #ED4C67;
+  --c-r-pinky: #8854D0;
+}
+
+/* Khung bàn phím mở rộng theo chiều ngang */
+.keyboard-section {
+  width: 100%;
+  max-width: 1260px;
+  margin: 0 auto;
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  padding: 12px 18px 8px 18px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 1px 3px rgba(255, 255, 255, 0.12);
+  border: 2px solid #334155;
+}
+
+.kb-row {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-bottom: 7px;
+}
+
+.kb-row:last-child {
+  margin-bottom: 0;
+}
+
+/* Từng phím bấm kích thước to rõ, dễ nhìn */
+.kb-key {
+  position: relative;
+  height: 48px;
+  background: #334155;
+  color: #f8fafc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Quicksand', 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  user-select: none;
+  cursor: default;
+  transition: all 0.08s ease;
+  box-shadow: 0 4px 0 #1e293b, 0 5px 8px rgba(0, 0, 0, 0.28);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Chiều ngang phím mở rộng tỉ lệ chuẩn */
+.key-1 { width: 66px; }
+.key-1-5 { width: 98px; font-size: 0.95rem; }
+.key-1-75 { width: 114px; font-size: 0.95rem; }
+.key-2-25 { width: 142px; font-size: 1rem; }
+.key-2-75 { width: 172px; font-size: 1rem; }
+.key-space { width: 420px; font-size: 1rem; letter-spacing: 1px; }
+
+/* Gờ xúc giác nổi bật trên phím F và J */
+.kb-key.has-bump {
+  border-bottom: 4px solid #ffd32a;
+}
+.bump-bar {
+  position: absolute;
+  bottom: 5px;
+  width: 16px;
+  height: 3px;
+  background: #ffd32a;
+  border-radius: 2px;
+}
+
+/* Vạch màu ngón tay dưới chân phím */
+.finger-l-pinky { border-bottom: 4px solid var(--c-l-pinky); }
+.finger-l-ring { border-bottom: 4px solid var(--c-l-ring); }
+.finger-l-middle { border-bottom: 4px solid var(--c-l-middle); }
+.finger-l-index { border-bottom: 4px solid var(--c-l-index); }
+.finger-thumbs { border-bottom: 4px solid var(--c-thumbs); }
+.finger-r-index { border-bottom: 4px solid var(--c-r-index); }
+.finger-r-middle { border-bottom: 4px solid var(--c-r-middle); }
+.finger-r-ring { border-bottom: 4px solid var(--c-r-ring); }
+.finger-r-pinky { border-bottom: 4px solid var(--c-r-pinky); }
+
+/* PHÍM MỤC TIÊU PHÁT SÁNG TO NỔI BẬT */
+.kb-key.is-target {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  transform: translateY(-4px) scale(1.1);
+  font-size: 1.45rem;
+  font-weight: 900;
+  box-shadow: 0 0 25px #ffd32a, 0 6px 0 #d97706 !important;
+  border: 2px solid #f59e0b !important;
+  z-index: 10;
+  animation: keyPulse 0.9s infinite alternate ease-in-out;
+}
+
+@keyframes keyPulse {
+  0% { transform: translateY(-3px) scale(1.06); box-shadow: 0 0 16px #ffd32a, 0 5px 0 #d97706; }
+  100% { transform: translateY(-5px) scale(1.14); box-shadow: 0 0 30px #fef08a, 0 7px 0 #d97706; }
+}
+
+.kb-key.is-pressed {
+  transform: translateY(3px) !important;
+  box-shadow: 0 1px 0 #0f172a !important;
+}
+
+.kb-key.is-correct-flash {
+  background: #22c55e !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 22px #22c55e !important;
+}
+
+.kb-key.is-error-flash {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 22px #ef4444 !important;
+  animation: keyShake 0.15s ease-in-out;
+}
+
+@keyframes keyShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* ==========================================================
+   VIRTUAL HANDS EXPANDED (Hai bàn tay mở rộng tương ứng với bàn phím)
+   ========================================================== */
+
+.hands-section {
+  width: 100%;
+  max-width: 1260px;
+  margin: 6px auto 0 auto;
+}
+
+.hands-unified-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  padding: 6px 24px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  border: 2px solid #e2e8f0;
+  gap: 20px;
+}
+
+.hand-mini-unit {
+  flex: 1;
+  max-width: 320px;
+  text-align: center;
+}
+
+.hand-title-tag {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 800;
+  font-size: 0.88rem;
+  color: #334155;
+  letter-spacing: 0.5px;
+}
+
+.hand-mini-svg {
+  width: 100%;
+  max-height: 102px;
+  overflow: visible;
+}
+
+.palm-compact {
+  fill: #ffedd5;
+  stroke: #fdba74;
+  stroke-width: 2;
+}
+
+.finger-body {
+  fill: #fff7ed;
+  stroke: #fdba74;
+  stroke-width: 1.5;
+  transition: all 0.15s ease;
+}
+
+.finger-text {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  fill: #475569;
+  text-anchor: middle;
+}
+
+/* HOẠT HỌA NGÓN TAY ĐANG GÕ */
+.finger-group {
+  transition: transform 0.15s ease;
+  transform-origin: bottom center;
+}
+
+.finger-group.is-active-finger {
+  animation: fingerTap 0.6s infinite alternate ease-in-out;
+}
+
+.finger-group.is-active-finger .finger-body {
+  fill: #ffffff !important;
+  stroke: #f97316 !important;
+  stroke-width: 3 !important;
+}
+
+.finger-group.is-active-finger .finger-tip-dot {
+  stroke: #ffffff;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 10px currentColor);
+  transform: scale(1.4);
+  transform-origin: center;
+}
+
+.finger-group.is-active-finger .finger-text {
+  fill: #0f172a;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+@keyframes fingerTap {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-7px); }
+}
+
+/* KHUNG HƯỚNG DẪN TRUNG TÂM (RỘNG RÃI & RÕ RÀNG) */
+.hand-center-guide {
+  flex: 1.5;
+  text-align: center;
+  background: #f8fafc;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: 1.5px dashed #cbd5e1;
+}
+
+.guide-lead-text {
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  letter-spacing: 0.5px;
+}
+
+.guide-active-pill {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1.4;
+}

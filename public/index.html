@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luyện Gõ Bàn Phím 10 Ngón - Kiểm Tra & Trò Chơi Đa Dạng</title>
+  <link rel="stylesheet" href="css/student.css">
+  <link rel="stylesheet" href="css/keyboard.css">
+</head>
+<body>
+
+  <!-- Input ẩn để bắt phím -->
+  <input type="text" id="hiddenTypingInput" class="hidden-typing-input" autocomplete="off" autocapitalize="off" spellcheck="false">
+
+  <!-- Header Đẹp Mắt & Tiện Ích -->
+  <header class="app-header">
+    <div class="logo-area">
+      <div class="logo-icon">🚀</div>
+      <div>
+        <h1 class="logo-title">GÕ BÀN PHÍM 10 NGÓN</h1>
+        <div class="logo-subtitle">Luyện tập • Trò chơi đa cấp độ • Đánh giá 10 phút</div>
+      </div>
+    </div>
+
+    <!-- Thanh chuyển đổi chế độ & Trò chơi -->
+    <nav class="mode-nav-tabs">
+      <button type="button" class="mode-tab-btn is-active" data-mode="typing" id="tabModeTyping">
+        📖 Luyện Gõ
+      </button>
+      <button type="button" class="mode-tab-btn" data-mode="balloon" id="tabModeBalloon">
+        🎈 Bóng Bay
+      </button>
+      <button type="button" class="mode-tab-btn" data-mode="racer" id="tabModeRacer">
+        🚀 Đua Tàu
+      </button>
+      <button type="button" class="mode-tab-btn" data-mode="meteor" id="tabModeMeteor">
+        👾 Thiên Thạch
+      </button>
+      <button type="button" class="mode-tab-btn" data-mode="apple" id="tabModeApple">
+        🍎 Hái Táo
+      </button>
+      <button type="button" class="mode-tab-btn" data-mode="exam10m" id="tabModeExam10m">
+        ⏱️ Thi 10 Phút
+      </button>
+    </nav>
+
+    <!-- Thẻ Học Sinh -->
+    <div class="student-badge-card" id="changeStudentBtn" title="Bấm để đổi tên học sinh hoặc lớp">
+      <div style="font-size: 1.2rem;">🎒</div>
+      <div>
+        <div class="student-name-display" id="displayStudentName">Học sinh</div>
+        <div class="student-class-display" id="displayStudentClass">Lớp 3A • Máy 01</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Khung nội dung chính (Mở rộng lấp đầy màn hình, không bị thừa khoảng trắng) -->
+  <main class="main-container">
+    
+    <!-- Thanh điều khiển & Chỉ số -->
+    <section class="control-bar">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button type="button" class="btn-open-lesson-picker" id="openLessonPickerBtn">
+          📚 Đổi Bài Luyện Tập ▾
+        </button>
+        <span class="current-lesson-name" id="currentLessonNameDisplay">Bài 1.1: Hai phím F và J</span>
+      </div>
+
+      <div class="live-stats">
+        <div class="stat-pill pill-wpm" title="Tốc độ gõ WPM">
+          <span>⚡ Tốc độ:</span>
+          <span class="stat-val" id="wpmVal">0</span>
+          <small>WPM</small>
+        </div>
+
+        <div class="stat-pill pill-accuracy" title="Độ chính xác">
+          <span>🎯 Đúng:</span>
+          <span class="stat-val" id="accuracyVal">100%</span>
+        </div>
+
+        <div class="stat-pill pill-timer" title="Thời gian còn lại">
+          <span>⏱️ Thời gian:</span>
+          <span class="stat-val" id="timerVal">1:00</span>
+        </div>
+
+        <button class="reset-btn" id="resetLessonBtn" type="button" title="Gõ lại bài này">🔄 Làm Lại</button>
+      </div>
+    </section>
+
+    <!-- 1. VÙNG LUYỆN GÕ BÌNH THƯỜNG -->
+    <section class="typing-box" id="typingDisplaySection">
+      <div class="lesson-title-tag" id="lessonTitleTag">Bài 1: Hàng cơ sở</div>
+      <div class="text-display" id="textDisplay"></div>
+    </section>
+
+    <!-- 2. TRÒ CHƠI BÓNG BAY (BALLOON POP) -->
+    <section class="game-view-container" id="balloonGameContainer">
+      <div class="game-top-bar">
+        <div class="game-stats-badge">
+          <span>🏆 Điểm: <b id="balloonScore">0</b></span>
+          <span>Mạng: <b id="balloonLives">❤️ ❤️ ❤️</b></span>
+        </div>
+        <div class="game-levels-group" id="balloonLevelButtons">
+          <button type="button" class="btn-game-lvl is-active" data-lvl="1">Cấp 1: Hàng cơ sở</button>
+          <button type="button" class="btn-game-lvl" data-lvl="2">Cấp 2: Toàn bộ phím</button>
+          <button type="button" class="btn-game-lvl" data-lvl="3">Cấp 3: Từ vựng nhanh</button>
+        </div>
+      </div>
+      <canvas id="balloonGameCanvas" class="game-canvas-full"></canvas>
+    </section>
+
+    <!-- 3. TRÒ CHƠI ĐUA TÀU VŨ TRỤ (SPACE RACER) -->
+    <section class="game-view-container" id="racerGameContainer"></section>
+
+    <!-- 4. TRÒ CHƠI BẮN THIÊN THẠCH (METEOR DEFENDER) -->
+    <section class="game-view-container" id="meteorGameContainer">
+      <div class="game-top-bar">
+        <div class="game-stats-badge">
+          <span>🏆 Điểm: <b id="meteorScore">0</b></span>
+          <span>Căn cứ: <b id="meteorLives">🛡️ 🛡️ 🛡️</b></span>
+        </div>
+        <div class="game-levels-group" id="meteorLevelButtons">
+          <button type="button" class="btn-game-lvl is-active" data-lvl="1">Cấp 1: Chữ cái</button>
+          <button type="button" class="btn-game-lvl" data-lvl="2">Cấp 2: Chữ + Số</button>
+          <button type="button" class="btn-game-lvl" data-lvl="3">Cấp 3: Bão thiên thạch</button>
+        </div>
+      </div>
+      <canvas id="meteorGameCanvas" class="game-canvas-full"></canvas>
+    </section>
+
+    <!-- 5. TRÒ CHƠI HÁI TÁO VÀNG (APPLE CATCHER) -->
+    <section class="game-view-container" id="appleGameContainer">
+      <div class="game-top-bar">
+        <div class="game-stats-badge">
+          <span>🏆 Điểm: <b id="appleScore">0</b></span>
+          <span>Mạng: <b id="appleLives">❤️ ❤️ ❤️</b></span>
+        </div>
+        <div class="game-levels-group" id="appleLevelButtons">
+          <button type="button" class="btn-game-lvl is-active" data-lvl="1">Cấp 1: Hàng cơ sở</button>
+          <button type="button" class="btn-game-lvl" data-lvl="2">Cấp 2: Chữ ngẫu nhiên</button>
+          <button type="button" class="btn-game-lvl" data-lvl="3">Cấp 3: Từ ghép quả</button>
+        </div>
+      </div>
+      <canvas id="appleGameCanvas" class="game-canvas-full"></canvas>
+    </section>
+
+    <!-- BÀN PHÍM ẢO MỞ RỘNG (TO RÕ, ĐẦY ĐẶN) -->
+    <section class="keyboard-section" id="keyboardContainer"></section>
+
+    <!-- HAI BÀN TAY ẢO GẮN LIỀN SÁT BÀN PHÍM -->
+    <section class="hands-section" id="handsContainer"></section>
+
+  </main>
+
+  <!-- ==================== MODAL CHỌN BÀI LUYỆN TRỰC QUAN ==================== -->
+  <div class="lesson-modal-overlay" id="lessonPickerModal">
+    <div class="lesson-picker-card">
+      <div class="lesson-picker-header">
+        <h2 class="lesson-picker-title">📚 Danh Mục Bài Luyện & Bài Thi</h2>
+        <button type="button" class="close-modal-btn" id="closeLessonPickerBtn">✕</button>
+      </div>
+
+      <!-- Tab danh mục bài học -->
+      <div class="lesson-cat-tabs" id="lessonCatTabs">
+        <button type="button" class="cat-tab-btn is-active" data-cat="ALL">Tất Cả</button>
+        <button type="button" class="cat-tab-btn" data-cat="Hàng cơ sở">Hàng Cơ Sở</button>
+        <button type="button" class="cat-tab-btn" data-cat="Hàng phím trên">Hàng Phím Trên</button>
+        <button type="button" class="cat-tab-btn" data-cat="Hàng phím dưới">Hàng Phím Dưới</button>
+        <button type="button" class="cat-tab-btn" data-cat="Phím số & Ký tự">Phím Số & Ký Tự</button>
+        <button type="button" class="cat-tab-btn" data-cat="Ghép từ">Ghép Từ</button>
+        <button type="button" class="cat-tab-btn" data-cat="Đoạn văn">Đoạn Văn Dài</button>
+        <button type="button" class="cat-tab-btn" data-cat="Kiểm tra đánh giá">Bài Thi 10 Phút</button>
+      </div>
+
+      <!-- Lưới các bài học để bấm chọn ngay -->
+      <div class="lessons-grid" id="lessonsGridContainer"></div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL ĐĂNG NHẬP / CHỌN TÊN ==================== -->
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal-card">
+      <div class="modal-icon">👦👧</div>
+      <h2 class="modal-title">Chào Mừng Học Sinh!</h2>
+      <p class="modal-desc">Vui lòng nhập tên và lớp để bắt đầu luyện gõ và nộp điểm</p>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label class="form-label" for="inputStudentName">Họ và tên của bạn:</label>
+          <input type="text" id="inputStudentName" class="form-input" placeholder="Ví dụ: Nguyễn Minh An" required autofocus>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="inputStudentClass">Lớp học:</label>
+          <input type="text" id="inputStudentClass" class="form-input" placeholder="Ví dụ: 3A, 4B, 5C..." required value="Lớp 3A">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="inputMachineNumber">Số máy bàn (nếu có):</label>
+          <input type="text" id="inputMachineNumber" class="form-input" placeholder="Ví dụ: Máy 05">
+        </div>
+
+        <button type="submit" class="btn-primary">BẮT ĐẦU LUYỆN GÕ 🚀</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL KHEN THƯỞNG KẾT QUẢ ==================== -->
+  <div class="modal-overlay" id="rewardModal">
+    <div class="modal-card">
+      <div class="modal-icon">🎉</div>
+      <h2 class="modal-title">HOÀN THÀNH XUẤT SẮC!</h2>
+
+      <div class="reward-stars-row" id="rewardStars"></div>
+      <div class="badge-earned-pill" id="rewardBadgeText">🏅 Bàn Tay Vàng</div>
+
+      <div class="reward-stats-grid">
+        <div class="r-stat-box">
+          <div class="r-stat-val" id="resWpm">0</div>
+          <div class="r-stat-label">Tốc độ (WPM)</div>
+        </div>
+        <div class="r-stat-box">
+          <div class="r-stat-val" id="resAccuracy">100%</div>
+          <div class="r-stat-label">Độ chính xác</div>
+        </div>
+        <div class="r-stat-box">
+          <div class="r-stat-val" id="resErrors">0</div>
+          <div class="r-stat-label">Số lỗi gõ</div>
+        </div>
+      </div>
+
+      <div class="sent-to-teacher-notice">
+        <span>✅ Đã lưu kết quả về máy chủ thành công!</span>
+      </div>
+
+      <div class="modal-action-btns">
+        <button type="button" class="btn-secondary" id="retryBtn">🔄 Gõ Lại Bài Này</button>
+        <button type="button" class="btn-next-lesson" id="nextLessonBtn">⭐ Bài Tiếp Theo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== OVERLAY ĐẾM NGƯỢC KIỂM TRA ==================== -->
+  <div class="countdown-overlay" id="countdownOverlay">
+    <div class="countdown-text">BẮT ĐẦU BÀI KIỂM TRA ĐỒNG LOẠT</div>
+    <div class="countdown-number" id="countdownNum">3</div>
+    <div class="countdown-text">Hãy sẵn sàng các ngón tay nhé!</div>
+  </div>
+
+  <!-- Canvas pháo hoa ăn mừng -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- Script Libraries -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/lessons.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/keyboard.js"></script>
+  <script src="js/hands.js"></script>
+  <script src="js/games.js"></script>
+  <script src="js/student.js"></script>
+</body>
+</html>

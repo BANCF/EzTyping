@@ -1,0 +1,706 @@
+/* ==========================================================
+   STUDENT APPLICATION STYLESHEET (Màn Hình Chữ & Game Siêu To Rõ)
+   Tăng kích thước hiển thị chữ và trò chơi lên gấp đôi, thoải mái, dễ nhìn
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Quicksand:wght@600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', 'Quicksand', sans-serif;
+  background: radial-gradient(circle at 50% 5%, #e0e7ff 0%, #f1f5f9 40%, #e2e8f0 100%);
+  color: #1e293b;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  user-select: none;
+}
+
+/* ================= HEADER ĐẸP MẮT ================= */
+.app-header {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  padding: 8px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #e2e8f0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  height: 54px;
+  flex-shrink: 0;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  font-size: 2.2rem;
+  filter: drop-shadow(0 2px 5px rgba(239, 68, 68, 0.35));
+}
+
+.logo-title {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+  letter-spacing: -0.3px;
+}
+
+.logo-subtitle {
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 700;
+}
+
+/* Thanh chuyển chế độ (Mode Tabs) */
+.mode-nav-tabs {
+  display: flex;
+  gap: 6px;
+  background: #e2e8f0;
+  padding: 4px;
+  border-radius: 14px;
+}
+
+.mode-tab-btn {
+  background: transparent;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 10px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.mode-tab-btn.is-active {
+  background: #ffffff;
+  color: #2563eb;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.18);
+}
+
+.mode-tab-btn:hover:not(.is-active) {
+  color: #0f172a;
+}
+
+/* Thẻ Học Sinh */
+.student-badge-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  padding: 5px 16px;
+  border-radius: 30px;
+  border: 1.5px solid #cbd5e1;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.student-badge-card:hover {
+  background: #eff6ff;
+  border-color: #3b82f6;
+}
+
+.student-name-display {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.student-class-display {
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 700;
+}
+
+/* ================= MAIN CONTAINER RỘNG TOÀN DIỆN ================= */
+.main-container {
+  flex: 1;
+  max-width: 1380px;
+  width: 96%;
+  margin: 8px auto;
+  padding: 6px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ================= THANH ĐIỀU KHIỂN & CHỈ SỐ ================= */
+.control-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  padding: 8px 22px;
+  border-radius: 16px;
+  border: 1.5px solid #cbd5e1;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+  flex-shrink: 0;
+}
+
+.btn-open-lesson-picker {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border: none;
+  padding: 9px 20px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.28);
+  transition: transform 0.1s;
+}
+
+.btn-open-lesson-picker:hover {
+  transform: translateY(-1px);
+}
+
+.current-lesson-name {
+  font-weight: 800;
+  color: #0f172a;
+  font-size: 1.1rem;
+  max-width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Chỉ số WPM, Accuracy, Time to rõ */
+.live-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stat-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.stat-pill.pill-wpm { background: #dcfce7; color: #15803d; border: 1.5px solid #86efac; }
+.stat-pill.pill-accuracy { background: #fef9c3; color: #a16207; border: 1.5px solid #fde047; }
+.stat-pill.pill-timer { background: #e0f2fe; color: #0369a1; border: 1.5px solid #7dd3fc; }
+
+.stat-val { font-size: 1.35rem; font-weight: 900; }
+
+.reset-btn {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1.5px solid #cbd5e1;
+  padding: 7px 16px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.reset-btn:hover { background: #e2e8f0; }
+
+/* ================= KHUNG HIỂN THỊ CHỮ GÕ SIÊU TO RÕ (220PX) ================= */
+.typing-box {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px 30px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  border: 2px solid #cbd5e1;
+  position: relative;
+  height: 220px;
+  max-height: 220px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.typing-box::-webkit-scrollbar { width: 7px; }
+.typing-box::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+
+.lesson-title-tag {
+  position: absolute;
+  top: 8px;
+  right: 18px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 3px 12px;
+  border-radius: 14px;
+}
+
+.text-display {
+  font-size: 2.6rem;
+  letter-spacing: 2.5px;
+  line-height: 1.6;
+  font-weight: 700;
+  word-break: break-word;
+  white-space: pre-wrap;
+  color: #1e293b;
+}
+
+.char {
+  position: relative;
+  border-radius: 6px;
+  padding: 0 1px;
+}
+
+.char.correct { color: #16a34a; }
+.char.wrong { color: #dc2626; background: #fee2e2; border-bottom: 4px solid #ef4444; }
+.char.current {
+  background: #fde047;
+  color: #0f172a;
+  border-radius: 6px;
+  padding: 0 6px;
+  box-shadow: 0 0 16px rgba(250, 204, 21, 0.95);
+  animation: cursorPulse 0.8s infinite alternate;
+}
+
+@keyframes cursorPulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.06); background: #fef08a; }
+}
+
+.hidden-typing-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  left: -9999px;
+}
+
+/* ================= KHUNG TRÒ CHƠI SIÊU TO RÕ (260PX) ================= */
+.game-view-container {
+  display: none;
+  height: 260px;
+  max-height: 260px;
+  background: #0f172a;
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid #334155;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+
+.game-view-container.is-active {
+  display: block;
+}
+
+/* Thanh chọn Cấp Độ (Level Bar) */
+.game-top-bar {
+  position: absolute;
+  top: 10px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.game-stats-badge {
+  display: flex;
+  gap: 18px;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.05rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+}
+
+.game-levels-group {
+  display: flex;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 4px 8px;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+}
+
+.btn-game-lvl {
+  background: transparent;
+  color: #94a3b8;
+  border: none;
+  padding: 5px 14px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-game-lvl.is-active {
+  background: #f59e0b;
+  color: #0f172a;
+  box-shadow: 0 2px 6px rgba(245, 158, 11, 0.4);
+}
+
+.game-canvas-full {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Space Racer Track lớn */
+.racer-track-card {
+  height: 100%;
+  padding: 12px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: linear-gradient(135deg, #1e1b4b, #0f172a);
+  color: #fff;
+}
+
+.race-lane {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.lane-label {
+  font-size: 0.95rem;
+  font-weight: 800;
+  width: 90px;
+}
+
+.lane-track {
+  flex: 1;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 11px;
+  position: relative;
+  overflow: visible;
+  border: 1.5px dashed rgba(255, 255, 255, 0.25);
+}
+
+.racer-avatar {
+  position: absolute;
+  top: -14px;
+  font-size: 2rem;
+  transition: left 0.15s ease;
+}
+
+.finish-line {
+  position: absolute;
+  right: 2px;
+  top: -10px;
+  font-size: 1.4rem;
+}
+
+.lane-percent {
+  font-size: 0.95rem;
+  font-weight: 800;
+  width: 55px;
+  text-align: right;
+  color: #38bdf8;
+}
+
+.racer-target-display {
+  text-align: center;
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  padding: 6px;
+}
+
+.r-word.current {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 4px 14px;
+  border-radius: 10px;
+}
+
+.r-char.correct { color: #4ade80; }
+.r-char.active { color: #facc15; text-decoration: underline; }
+.r-char.pending { color: #94a3b8; }
+.r-word.done { color: #4ade80; opacity: 0.6; }
+.r-word.upcoming { color: #64748b; }
+
+.racer-winner-banner {
+  color: #facc15;
+  font-size: 1.35rem;
+  font-weight: 900;
+}
+.racer-loser-banner {
+  color: #f87171;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+/* ================= MODAL CHỌN BÀI LUYỆN TRỰC QUAN ================= */
+.lesson-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+}
+
+.lesson-modal-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+.lesson-picker-card {
+  background: #ffffff;
+  width: 92%;
+  max-width: 900px;
+  max-height: 85vh;
+  border-radius: 24px;
+  padding: 26px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e2e8f0;
+}
+
+.lesson-picker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.lesson-picker-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.close-modal-btn {
+  background: #f1f5f9;
+  border: none;
+  font-size: 1.4rem;
+  padding: 4px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #64748b;
+}
+
+.close-modal-btn:hover { background: #e2e8f0; color: #0f172a; }
+
+.lesson-cat-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.cat-tab-btn {
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #475569;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.cat-tab-btn.is-active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+.lessons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+  overflow-y: auto;
+  padding-right: 6px;
+  max-height: 52vh;
+}
+
+.lesson-item-card {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.lesson-item-card:hover {
+  transform: translateY(-2px);
+  border-color: #3b82f6;
+  background: #eff6ff;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.15);
+}
+
+.lesson-item-card.is-selected {
+  border-color: #2563eb;
+  background: #dbeafe;
+}
+
+.l-item-title {
+  font-weight: 800;
+  font-size: 1rem;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.l-item-desc {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin-bottom: 12px;
+  line-height: 1.35;
+}
+
+.l-item-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.l-item-duration {
+  background: #e2e8f0;
+  padding: 4px 10px;
+  border-radius: 8px;
+  color: #334155;
+}
+
+.l-item-level { color: #2563eb; font-weight: 800; }
+
+/* ================= MODAL LOGIN & REWARD ================= */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+}
+
+.modal-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+.modal-card {
+  background: #ffffff;
+  width: 90%;
+  max-width: 460px;
+  border-radius: 26px;
+  padding: 30px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+  border: 3px solid #3b82f6;
+  text-align: center;
+  animation: modalPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalPop {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.modal-icon { font-size: 3.4rem; margin-bottom: 8px; }
+.modal-title { font-family: 'Quicksand', sans-serif; font-size: 1.7rem; color: #0f172a; font-weight: 800; margin-bottom: 4px; }
+.modal-desc { font-size: 0.92rem; color: #64748b; font-weight: 600; margin-bottom: 20px; }
+
+.form-group { margin-bottom: 16px; text-align: left; }
+.form-label { display: block; font-weight: 800; font-size: 0.92rem; color: #334155; margin-bottom: 6px; }
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1.5px solid #cbd5e1;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 700;
+  outline: none;
+}
+.form-input:focus { border-color: #2563eb; }
+
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border: none;
+  font-size: 1.15rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  transition: transform 0.1s;
+}
+
+.reward-stars-row { display: flex; justify-content: center; gap: 12px; margin: 16px 0; }
+.star-icon { font-size: 3.2rem; color: #e2e8f0; }
+.star-icon.achieved { color: #f59e0b; filter: drop-shadow(0 0 14px #f59e0b); }
+
+.badge-earned-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fef3c7;
+  border: 1.5px dashed #f59e0b;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #b45309;
+  margin-bottom: 18px;
+}
+
+.reward-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
+.r-stat-box { background: #f8fafc; padding: 12px; border-radius: 14px; border: 1.5px solid #e2e8f0; }
+.r-stat-val { font-size: 1.5rem; font-weight: 800; color: #0f172a; }
+.r-stat-label { font-size: 0.78rem; font-weight: 700; color: #64748b; }
+
+.sent-to-teacher-notice {
+  background: #dcfce7;
+  color: #15803d;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.modal-action-btns { display: flex; gap: 12px; }
+.btn-secondary { flex: 1; padding: 12px; border-radius: 14px; background: #e2e8f0; color: #334155; border: none; font-weight: 800; cursor: pointer; }
+.btn-next-lesson { flex: 1; padding: 12px; border-radius: 14px; background: #2563eb; color: #fff; border: none; font-weight: 800; cursor: pointer; }
+
+/* Countdown overlay */
+.countdown-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(15, 23, 42, 0.9);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  z-index: 20000; color: #fff; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+}
+.countdown-overlay.is-active { opacity: 1; pointer-events: auto; }
+.countdown-number { font-size: 8rem; font-weight: 900; color: #facc15; animation: countdownPulse 1s infinite; }
+.countdown-text { font-size: 1.7rem; font-weight: 800; }

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bảng Điều Khiển Giáo Viên - Quản Lý Kiểm Tra Gõ Phím</title>
+  <link rel="stylesheet" href="css/teacher.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="teacher-header">
+    <div class="teacher-title-area">
+      <div class="teacher-badge-icon">👨‍🏫</div>
+      <div>
+        <h1 class="teacher-main-title">HỆ THỐNG QUẢN LÝ LUYỆN & THI GÕ PHÍM 10 NGÓN</h1>
+        <div class="teacher-subtitle">Giám sát bài thi trực tiếp và quản lý kết quả học sinh</div>
+      </div>
+    </div>
+    <a href="/" target="_blank" style="text-decoration: none; font-weight: 700; color: #3182ce; font-size: 0.95rem;">
+      👉 Mở màn hình học sinh làm bài
+    </a>
+  </header>
+
+  <!-- Banner thông tin Mạng LAN nội bộ -->
+  <section class="lan-banner">
+    <div class="lan-text-group">
+      <div class="lan-icon">📡</div>
+      <div>
+        <div class="lan-label">ĐỊA CHỈ TRUY CẬP CHO HỌC SINH LÀM BÀI:</div>
+        <div class="lan-ip-address" id="lanIpDisplay">Đang tải địa chỉ kết nối...</div>
+      </div>
+    </div>
+    <div class="lan-help-hint">
+      💡 <b>Hướng dẫn</b>: Học sinh có thể truy cập qua mạng LAN hoặc link Vercel trực tuyến.
+    </div>
+  </section>
+
+  <!-- Container chính -->
+  <main class="dashboard-container">
+
+    <!-- Bộ điều khiển phát đề kiểm tra đồng loạt -->
+    <section class="exam-control-card">
+      <h2 class="card-title">🎯 Phát Đề Kiểm Tra Cho Học Sinh</h2>
+      <div class="exam-controls-grid">
+        <div>
+          <label class="field-label" for="examLessonSelect">Chọn bài kiểm tra hoặc bài luyện tập:</label>
+          <select id="examLessonSelect" class="control-select"></select>
+        </div>
+
+        <div>
+          <label class="field-label" for="examDurationSelect">Thời gian làm bài:</label>
+          <select id="examDurationSelect" class="control-select">
+            <option value="120">2 Phút (120 giây)</option>
+            <option value="300">5 Phút (300 giây)</option>
+            <option value="600" selected>10 Phút (600 giây - Đánh giá toàn diện)</option>
+            <option value="900">15 Phút (900 giây)</option>
+          </select>
+        </div>
+
+        <div>
+          <button type="button" class="btn-launch-exam" id="launchExamBtn">
+            🚀 BẮT ĐẦU BÀI KIỂM TRA
+          </button>
+          <button type="button" class="btn-stop-exam" id="stopExamBtn">
+            ⏹️ DỪNG BÀI THI
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Giám sát phòng máy theo thời gian thực -->
+    <section class="monitor-section">
+      <div class="section-header-row">
+        <h2 class="card-title">🖥️ Giám Sát Trực Tiếp Tiến Độ Học Sinh</h2>
+        <span class="online-count-pill" id="onlineCount">🟢 Học sinh online: 0</span>
+      </div>
+
+      <!-- Lưới hiển thị các máy học sinh -->
+      <div class="student-grid" id="studentGrid">
+        <div class="empty-room-msg" style="grid-column: 1 / -1;">
+          Đang kết nối tới server...
+        </div>
+      </div>
+    </section>
+
+    <!-- Bảng điểm & Xuất file Excel -->
+    <section class="results-section">
+      <div class="table-tools-bar">
+        <div class="table-filter-group">
+          <h2 class="card-title" style="margin-bottom: 0;">📊 Bảng Điểm & Kết Quả Đã Nộp</h2>
+
+          <select id="filterClassSelect" class="control-select" style="width: 160px;">
+            <option value="ALL">Tất cả các lớp</option>
+          </select>
+
+          <input type="text" id="searchStudentInput" class="search-input" placeholder="🔍 Tìm kiếm học sinh...">
+        </div>
+
+        <div class="table-action-btns">
+          <button type="button" class="btn-export-excel" id="exportExcelBtn">
+            📥 Xuất Báo Cáo Excel (.xlsx)
+          </button>
+          <button type="button" class="btn-clear-data" id="clearResultsBtn">
+            🗑️ Xóa Dữ Liệu Cũ
+          </button>
+        </div>
+      </div>
+
+      <!-- Bảng kết quả -->
+      <div class="results-table-wrap">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th style="width: 50px;">STT</th>
+              <th style="width: 90px;">Số máy</th>
+              <th>Họ và tên học sinh</th>
+              <th style="width: 90px;">Lớp</th>
+              <th>Bài thi</th>
+              <th style="width: 95px;">Tốc độ (WPM)</th>
+              <th style="width: 110px;">Độ chính xác</th>
+              <th style="width: 80px;">Số lỗi</th>
+              <th style="width: 100px;">Thời gian</th>
+              <th style="width: 90px;">Xếp loại</th>
+              <th style="width: 95px;">Thời điểm</th>
+            </tr>
+          </thead>
+          <tbody id="resultsTableBody">
+            <tr>
+              <td colspan="11" style="text-align: center; color: #a0aec0; padding: 25px;">
+                Đang tải dữ liệu...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Script Libraries -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/lessons.js"></script>
+  <script src="js/teacher.js"></script>
+</body>
+</html>

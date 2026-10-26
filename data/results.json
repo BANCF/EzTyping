@@ -1,0 +1,53 @@
+[
+  {
+    "id": "res_demo_1",
+    "timestamp": "2026-10-26T07:30:00.000Z",
+    "studentName": "Nguyễn Minh An",
+    "className": "1A1",
+    "machineNumber": "Máy 01",
+    "lessonId": "c1_1",
+    "lessonTitle": "Bài 1.1: Hai phím xuất phát F và J",
+    "mode": "practice",
+    "wpm": 12,
+    "cpm": 60,
+    "accuracy": 98,
+    "mistakesCount": 1,
+    "duration": 45,
+    "stars": 3,
+    "badge": "Bàn Tay Vàng 🌟"
+  },
+  {
+    "id": "res_demo_2",
+    "timestamp": "2026-10-26T07:32:00.000Z",
+    "studentName": "Trần Bảo Ngọc",
+    "className": "1A1",
+    "machineNumber": "Máy 02",
+    "lessonId": "test_1",
+    "lessonTitle": "Kiểm Tra 1: Hàng cơ sở và hàng trên (60s)",
+    "mode": "test",
+    "wpm": 15,
+    "cpm": 75,
+    "accuracy": 100,
+    "mistakesCount": 0,
+    "duration": 60,
+    "stars": 3,
+    "badge": "Hiệp Sĩ Gõ Đúng 🛡️"
+  },
+  {
+    "id": "res_demo_3",
+    "timestamp": "2026-10-26T07:35:00.000Z",
+    "studentName": "Lê Gia Huy",
+    "className": "2A1",
+    "machineNumber": "Máy 08",
+    "lessonId": "c4_2",
+    "lessonTitle": "Bài 4.2: Từ 3 chữ cái tiếng Việt và tiếng Anh",
+    "mode": "practice",
+    "wpm": 18,
+    "cpm": 90,
+    "accuracy": 92,
+    "mistakesCount": 3,
+    "duration": 55,
+    "stars": 3,
+    "badge": "Tên Lửa Siêu Tốc 🚀"
+  }
+]
